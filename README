@@ -2,8 +2,8 @@ A better way to display relative dates using JavaScript. Instead of a raw date
 string, this script will return strings like "2 hours ago" or "5 days".
 
 
-For internationalization, include a "humane.lang.xx.js" file just before humane.js:
-  <script src="humane.lang.sv.js" type="text/javascript"></script>
+For internationalization, include a "lang/XX.js" file just before humane.js:
+  <script src="lang/sv.js" type="text/javascript"></script>
   <script src="humane.js" type="text/javascript"></script>
 
 
