@@ -14,28 +14,11 @@
 
 function humaneDate(date, compareTo){
 
-    if(!date) {
+    if(!date || !lang) {
         return;
     }
 
-    var lang = {
-            ago: 'Ago',
-            from: '',
-            now: 'Just Now',
-            minute: 'Minute',
-            minutes: 'Minutes',
-            hour: 'Hour',
-            hours: 'Hours',
-            day: 'Day',
-            days: 'Days',
-            week: 'Week',
-            weeks: 'Weeks',
-            month: 'Month',
-            months: 'Months',
-            year: 'Year',
-            years: 'Years'
-        },
-        formats = [
+    var formats = [
             [60, lang.now, lang.now, 0, "red"],
             [3600, lang.minute, lang.minutes, 60, "red"], // 60 minutes, 1 minute
             [86400, lang.hour, lang.hours, 3600, "red"], // 24 hours, 1 hour
