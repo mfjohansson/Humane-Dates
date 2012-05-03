@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Humane-Dates Demo</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script language="JavaScript" src="lang/en.js"></script>
+        <script language="JavaScript" src="humane.js"></script>
+        <script language="JavaScript" type="text/javascript">
+            function transform_date (id) {
+                var date = humaneDateObject(document.getElementById(id).innerHTML);
+                document.getElementById(id).innerHTML = date.date;
+                document.getElementById(id).className = date.css_class;
+            }
+        </script>
+        <style>
+            .red {
+                color:red;
+            }
+            .yellow {
+                color:yellow;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <span id="span-1">2012-05-03 14:29:32</span> <input type="button" onclick="transform_date('span-1')" value="Transform" /> <br />
+            <span id="span-2">1995-08-15</span> <input type="button" onclick="transform_date('span-2')" value="Transform" /> <br />
+            <span id="span-3">2013-02-11 20:15</span> <input type="button" onclick="transform_date('span-3')" value="Transform" /> <br />
+        </div>
+    </body>
+</html>

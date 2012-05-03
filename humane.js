@@ -12,7 +12,7 @@
  * Licensed under the MIT license.
  */
 
-function humaneDate(date, compareTo){
+function humaneDateObject(date, compareTo){
 
     if(!date || !lang) {
         return;
@@ -74,22 +74,33 @@ function humaneDate(date, compareTo){
         }
         return val;
     }
+    
+    var return_date = {date: "", css_class:""};
 
     for(var i = 0, format = formats[0]; formats[i]; format = formats[++i]) {
-        if(seconds < format[0]) {
+        if(seconds < format[0]) {            
+            return_date.css_class = format[4];
+            return_date.real_date = date;
+            
             if(i === 0) {
                 // Now
-                return [format[1], ""];
+                return_date.date = format[1];
+                return return_date;
             }
 
             var val = Math.ceil(normalize(seconds, format[3]) / (format[3]));
-            return [val +
-                    ' ' +
-                    (val != 1 ? format[2] : format[1]) +
-                    (i > 0 ? token : ''), format[4]];
+            return_date.date = val + ' ' + (val != 1 ? format[2] : format[1]) + (i > 0 ? token : '');
+            
+            return return_date;
         }
     }
 };
+
+function humaneDate(date, compareTo){
+    var compareTo = compareTo || new Date;
+    var date = humaneDateObject(date, compareTo);
+    return date.date;
+}
 
 if(typeof jQuery != 'undefined') {
     jQuery.fn.humaneDates = function(options)
@@ -103,16 +114,16 @@ if(typeof jQuery != 'undefined') {
             var $t = jQuery(this),
                 date = $t.attr('datetime') || $t.attr('title');
 
-            date = humaneDate(date);
+            date = humaneDateObject(date);
 
             if(date && settings['lowercase']) {
-                date[0] = date[0].toLowerCase();
+                date.date = date.date.toLowerCase();
             }
 
             if(date && $t.html() != date) {
                 // don't modify the dom if we don't have to
-                $t.html(date[0]);
-                $t.addClass(date[1]);
+                $t.html(date.date);
+                $t.addClass(date.css_class);
             }
         });
     };
