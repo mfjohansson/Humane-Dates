@@ -36,13 +36,13 @@ function humaneDate(date, compareTo){
             years: 'Years'
         },
         formats = [
-            [60, lang.now],
-            [3600, lang.minute, lang.minutes, 60], // 60 minutes, 1 minute
-            [86400, lang.hour, lang.hours, 3600], // 24 hours, 1 hour
-            [604800, lang.day, lang.days, 86400], // 7 days, 1 day
-            [2628000, lang.week, lang.weeks, 604800], // ~1 month, 1 week
-            [31536000, lang.month, lang.months, 2628000], // 1 year, ~1 month
-            [Infinity, lang.year, lang.years, 31536000] // Infinity, 1 year
+            [60, lang.now, lang.now, 0, "red"],
+            [3600, lang.minute, lang.minutes, 60, "red"], // 60 minutes, 1 minute
+            [86400, lang.hour, lang.hours, 3600, "red"], // 24 hours, 1 hour
+            [604800, lang.day, lang.days, 86400, "yellow"], // 7 days, 1 day
+            [2628000, lang.week, lang.weeks, 604800, ""], // ~1 month, 1 week
+            [31536000, lang.month, lang.months, 2628000, ""], // 1 year, ~1 month
+            [Infinity, lang.year, lang.years, 31536000, ""] // Infinity, 1 year
         ],
         isString = typeof date == 'string',
         date = isString ?
@@ -80,12 +80,12 @@ function humaneDate(date, compareTo){
      * 1 Year                           1 Year
      * > 1 Year                         X Years
      *
-     * Single units are +10%. 1 Year shows first at 1 Year + 10%
+     * Single units are +40%. 1 Year shows first at 1 Year + 40%
      */
 
     function normalize(val, single)
     {
-        var margin = 0.1;
+        var margin = 0.4;
         if(val >= single && val <= single * (1+margin)) {
             return single;
         }
@@ -96,14 +96,14 @@ function humaneDate(date, compareTo){
         if(seconds < format[0]) {
             if(i === 0) {
                 // Now
-                return format[1];
+                return [format[1], ""];
             }
 
             var val = Math.ceil(normalize(seconds, format[3]) / (format[3]));
-            return val +
+            return [val +
                     ' ' +
                     (val != 1 ? format[2] : format[1]) +
-                    (i > 0 ? token : '');
+                    (i > 0 ? token : ''), format[4]];
         }
     }
 };
@@ -123,12 +123,13 @@ if(typeof jQuery != 'undefined') {
             date = humaneDate(date);
 
             if(date && settings['lowercase']) {
-                date = date.toLowerCase();
+                date[0] = date[0].toLowerCase();
             }
 
             if(date && $t.html() != date) {
                 // don't modify the dom if we don't have to
-                $t.html(date);
+                $t.html(date[0]);
+                $t.addClass(date[1]);
             }
         });
     };
