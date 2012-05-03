@@ -2,6 +2,7 @@
  * Javascript Humane Dates
  * Copyright (c) 2008 Dean Landolt (deanlandolt.com)
  * Re-write by Zach Leatherman (zachleat.com)
+ * Re-write by Magnus Johansson (mfjohansson.nu)
  *
  * Adopted from the John Resig's pretty.js
  * at http://ejohn.org/blog/javascript-pretty-date
